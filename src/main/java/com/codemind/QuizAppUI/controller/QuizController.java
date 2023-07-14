@@ -1,8 +1,7 @@
 package com.codemind.QuizAppUI.controller;
 
-import com.codemind.QuizAppUI.model.Question;
 import com.codemind.QuizAppUI.model.QuestionWrapper;
-import com.codemind.QuizAppUI.service.QuestionService;
+import com.codemind.QuizAppUI.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/question")
-public class QuestionController {
+@RequestMapping("/quiz")
+public class QuizController {
 
     @Autowired
-    QuestionService questionService;
-    @GetMapping("/questions")
-    public String getAllQuestion(Model model){
+    QuizService quizService;
 
-        List<Question> questionList=questionService.getAllQuestion();
-        model.addAttribute("questions",questionList);
+    @GetMapping("/get/{title}")
+    public String getQuizQuestion(@PathVariable String title, Model model){
 
-        return "question-list";
+        List<QuestionWrapper> questionWrapperList=quizService.getQuizQuestion(title);
 
+        model.addAttribute("quizQuestion",questionWrapperList);
+        return "";
     }
 
 }
